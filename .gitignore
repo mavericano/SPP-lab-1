@@ -1,0 +1,6 @@
+/.idea
+/TestProject1
+/TestResults
+*.dll
+*/bin
+*/obj
