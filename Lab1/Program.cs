@@ -1,4 +1,5 @@
-﻿using Lab1.Tracer;
+﻿using System.Text;
+using Lab1.Tracer;
 using Lab1.Serialization;
 
 internal class Program
@@ -29,10 +30,19 @@ internal class Program
 
         var result = _tracer.GetTraceResult();
 
-        ITraceSerializer traceSerializer1 = new JsonTraceSerializer();
-        ITraceSerializer traceSerializer = new XmlTraceSerializer();
-        Console.WriteLine(traceSerializer.Serialaze(result));
-        Console.WriteLine(traceSerializer1.Serialaze(result));
+        var jsonResult = (new JsonTraceSerializer()).Serialaze(result);
+        var xmlResult = (new XmlTraceSerializer()).Serialaze(result);
+        Console.WriteLine(jsonResult);
+        Console.WriteLine(xmlResult);
+
+        using (var writer = new StreamWriter("result.json", false, Encoding.UTF8))
+        {
+            writer.Write(jsonResult);
+        }
+        using (var writer = new StreamWriter("result.xml", false, Encoding.UTF8))
+        {
+            writer.Write(xmlResult);
+        }
     }
 }
 
